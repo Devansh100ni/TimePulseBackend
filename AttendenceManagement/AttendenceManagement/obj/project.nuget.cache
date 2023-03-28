@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DWYW8hLc9n54K7U4TunFXtG9Gr1vs5MKXrP33tucuF4tkcEdYpAU3PodXR1fXW7AT9xEbnXi5dhA1KJ/kLzydQ==",
+  "dgSpecHash": "Ax+4uizF8zSCOCUNykNGyrbkR+5nLOGWacP5pxnJcvm8xnxX/9F3MPDz+L0xwK7xx3nOrD02MzNoIgFCopnjiw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DELL\\OneDrive\\Desktop\\SS-Project\\AttendenceManagement\\AttendenceManagement\\AttendenceManagement.csproj",
+  "projectFilePath": "C:\\Users\\DELL\\OneDrive\\Desktop\\Time Management\\TimeManagementAPI\\AttendenceManagement\\AttendenceManagement\\AttendenceManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
