@@ -31,12 +31,12 @@ namespace AttendenceManagement.Controllers
             try
             {
 
-                //if (fromFiles == null)
-                //{
-                //    return Problem("Please Upload file");
-                //}
                 var form = await Request.ReadFormAsync();
                 var file = form.Files.GetFile("file");
+                if (file == null)
+                {
+                    return Problem("Please Upload file");
+                }
 
                 string path = _iEmp.Documentupload(file);
                 DataTable dt = _iEmp.EmployeeData(path);
