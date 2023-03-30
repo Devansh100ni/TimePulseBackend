@@ -31,10 +31,11 @@ namespace AttendenceManagement.Infrastructure.Repository
                 var data1 = (from z in data
                              where z.UserId == data[j].UserId && z.AttDate == data[j].AttDate
                              select z).ToList();
-
+               
                 List<DateTime> logTimes = new List<DateTime>();
                 for (int k = 0; k < data1.Count; k++)
                 {
+                    
                     for (int l = 0; l < data1.Count; l++)
                     {
                         DateTime logTime = data1[l].LogTime;

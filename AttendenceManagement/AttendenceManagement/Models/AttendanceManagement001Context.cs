@@ -23,18 +23,18 @@ public partial class AttendanceManagement001Context : DbContext
     {
         modelBuilder.Entity<AttAttendanceLog>(entity =>
         {
-            entity.ToTable("att_AttendanceLog");
+            entity.ToTable("Att_AttendanceLog");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("Id");
             entity.Property(e => e.AttDate)
                 .HasColumnType("date")
-                .HasColumnName("attDate");
+                .HasColumnName("AttDate");
             entity.Property(e => e.Createdby)
                 .HasMaxLength(40)
                 .IsUnicode(false);
             entity.Property(e => e.Createddate)
                 .HasColumnType("datetime")
-                .HasColumnName("createddate");
+                .HasColumnName("CreatedDate");
             entity.Property(e => e.LogTime).HasColumnType("datetime");
             entity.Property(e => e.UserId)
                 .HasMaxLength(40)
@@ -42,7 +42,7 @@ public partial class AttendanceManagement001Context : DbContext
             entity.Property(e => e.Username)
                 .HasMaxLength(100)
                 .IsUnicode(false)
-                .HasColumnName("username");
+                .HasColumnName("Username");
         });
 
         modelBuilder.Entity<AttAttendanceRegister>(entity =>
@@ -58,7 +58,7 @@ public partial class AttendanceManagement001Context : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Processdate)
                 .HasColumnType("datetime")
-                .HasColumnName("processdate");
+                .HasColumnName("ProcessDate");
             entity.Property(e => e.UserId)
                 .HasMaxLength(50)
                 .IsUnicode(false);

@@ -1,7 +1,9 @@
 ﻿using AttendenceManagement.Infrastructure.IRepository;
+using AttendenceManagement.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Globalization;
 using System.Text.Json.Serialization;
@@ -21,6 +23,7 @@ namespace AttendenceManagement.Controllers
             _environment = environment;
             _iEmp = iEmp;
             this.logProcess = logProcess;
+           
         }
 
 
@@ -31,12 +34,12 @@ namespace AttendenceManagement.Controllers
             try
             {
 
-                //if (fromFiles == null)
-                //{
-                //    return Problem("Please Upload file");
-                //}
                 var form = await Request.ReadFormAsync();
                 var file = form.Files.GetFile("file");
+                if (file == null)
+                {
+                    return Problem("Please Upload file");
+                }
 
                 string path = _iEmp.Documentupload(file);
                 DataTable dt = _iEmp.EmployeeData(path);
@@ -56,6 +59,7 @@ namespace AttendenceManagement.Controllers
         {
             try
             {
+
                 var month = monthYear.month;
                 var year = monthYear.year;
                 var list = await logProcess.Log(month, year);
