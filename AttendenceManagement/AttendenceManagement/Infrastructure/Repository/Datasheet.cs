@@ -104,15 +104,14 @@ namespace AttendenceManagement.Infrastructure.Repository
                     if (userID != "" && username != "" && attDate != null && attDate != "")
                     {
                         AttAttendanceLog log = new AttAttendanceLog();
-                        log.UserId = employee.Rows[i][0].ToString();
-                        log.Username = employee.Rows[i][1].ToString();
+                        log.UserId = userID;
+                        log.Username = username;
                         log.AttDate = Convert.ToDateTime(employee.Rows[i][2].ToString()).Date;
                         log.LogTime = Convert.ToDateTime(employee.Rows[i][2].ToString());
                         log.Createdby = configuration["CreatedBy"];
                         log.Createddate = DateTime.Now.Date;
 
-                        var datetime = await db.AttAttendanceLogs.AnyAsync(x => x.UserId == log.UserId && x.LogTime == log.LogTime && x.AttDate.Date == log.AttDate.Date);
-                        if (!datetime)
+                        if (!await db.AttAttendanceLogs.AnyAsync(x => x.UserId == log.UserId && x.LogTime == log.LogTime && x.AttDate == log.AttDate))
                         {
                             await db.AttAttendanceLogs.AddAsync(log);
                             rawsEffected += await db.SaveChangesAsync();

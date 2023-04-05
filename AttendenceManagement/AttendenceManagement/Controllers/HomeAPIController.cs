@@ -1,6 +1,5 @@
 ﻿using AttendenceManagement.Infrastructure.IRepository;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Data;
 
 namespace AttendenceManagement.Controllers

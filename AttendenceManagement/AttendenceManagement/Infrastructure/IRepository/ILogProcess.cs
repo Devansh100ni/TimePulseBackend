@@ -1,5 +1,4 @@
-﻿using AttendenceManagement.Models;
-using AttendenceManagement.ViewModels;
+﻿using AttendenceManagement.ViewModels;
 
 namespace AttendenceManagement.Infrastructure.IRepository
 {

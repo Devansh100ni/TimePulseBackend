@@ -2,7 +2,6 @@
 using AttendenceManagement.Models;
 using AttendenceManagement.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace AttendenceManagement.Infrastructure.Repository
 {
@@ -35,16 +34,9 @@ namespace AttendenceManagement.Infrastructure.Repository
                     userLogIn = logTimes.First();
                     userLogOut = logTimes.Last();
 
-                    var lateTime = TimeSpan.Zero.TotalMinutes;
-                    if (userLogIn > Convert.ToDateTime("10:00:00 AM").TimeOfDay)
-                    {
-                        lateTime = (userLogIn - Convert.ToDateTime("10:00:00 AM").TimeOfDay).TotalMinutes;
-                    }
-                    else
-                    {
-                        lateTime = 0;
-                    }
-                    var workTime = Convert.ToDecimal((userLogOut.TotalMinutes - userLogIn.TotalMinutes));
+                    var lateTime = (userLogIn - Convert.ToDateTime("10:00:00 AM").TimeOfDay).TotalMinutes;
+                   
+                    var workTime = Convert.ToDecimal((userLogOut - userLogIn).TotalMinutes);
                     var hour = workTime / 60;
                     var overtime = Convert.ToDecimal(workTime - 540);
                     var earlyout = (Convert.ToDateTime("07:00:00 PM").TimeOfDay - userLogOut).Minutes;
@@ -59,7 +51,7 @@ namespace AttendenceManagement.Infrastructure.Repository
                         Processdate = DateTime.Now,
                         AttDate = dataInLogs.AttDate.Date,
                         Processby = configuration["CreatedBy"],
-                        LateInMinute = Convert.ToDecimal(lateTime),
+                        LateInMinute = Convert.ToDecimal(lateTime > 0 ? lateTime : 0),
                         Workhour = WorkHours,
                         OverTimeMinute = overtime > 0 ? overtime : 0,
                         EartlyOutMinute = earlyout > 0 ? earlyout : 0,
@@ -191,7 +183,7 @@ namespace AttendenceManagement.Infrastructure.Repository
                 userLogIn = TimeSpan.Zero;
                 userLogOut = TimeSpan.Zero;
             }
-            return reportsDataList; 
+            return reportsDataList;
         }
     }
 }
