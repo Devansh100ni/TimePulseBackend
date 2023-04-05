@@ -5,12 +5,8 @@ namespace AttendenceManagement.Infrastructure.IRepository
 {
     public interface ILogProcess
     {
-        public Task<List<AttAttendanceRegister>> Log(string month, string year);
-
-        public Task<List<ReportViewModel>> WorkHourReport();
-
-      //  public Task<List<ReportViewModel>> OutputTimings();
-
-        public Task<List<ReportViewModel>> OutputList();
+        //public Task<List<AttAttendanceRegister>> Log(string month, string year);
+        public Task<int> LogProcess(string month, string year);
+        public Task<List<ReportViewModel>> ReportsAsync();
     }
 }

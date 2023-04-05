@@ -1,12 +1,7 @@
 ﻿using AttendenceManagement.Infrastructure.IRepository;
-using AttendenceManagement.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Data;
-using System.Globalization;
-using System.Text.Json.Serialization;
 
 namespace AttendenceManagement.Controllers
 {
@@ -14,16 +9,14 @@ namespace AttendenceManagement.Controllers
     [ApiController]
     public class HomeAPIController : ControllerBase
     {
-        private IWebHostEnvironment _environment;
         private readonly IDatasheet _iEmp;
         private readonly ILogProcess logProcess;
 
-        public HomeAPIController(IWebHostEnvironment environment, IDatasheet iEmp, ILogProcess logProcess)
+        public HomeAPIController(IDatasheet iEmp, ILogProcess logProcess)
         {
-            _environment = environment;
             _iEmp = iEmp;
             this.logProcess = logProcess;
-           
+
         }
 
 
@@ -41,10 +34,10 @@ namespace AttendenceManagement.Controllers
                     return Problem("Please Upload file");
                 }
 
-                string path = _iEmp.Documentupload(file);
-                DataTable dt = _iEmp.EmployeeData(path);
-                _iEmp.ImportEmployee(dt);
-                return Ok();
+                string path = await _iEmp.Documentupload(file);
+                DataTable dt = await _iEmp.EmployeeData(path);
+                var rowsEffected = await _iEmp.ImportEmployee(dt);
+                return Ok(rowsEffected);
             }
             catch (Exception ex)
             {
@@ -59,11 +52,10 @@ namespace AttendenceManagement.Controllers
         {
             try
             {
-
                 var month = monthYear.month;
                 var year = monthYear.year;
-                var list = await logProcess.Log(month, year);
-                return Ok(list);
+                var rawsAffected = await logProcess.LogProcess(month, year);
+                return Ok(rawsAffected);
             }
             catch (Exception ex)
             {
@@ -76,7 +68,8 @@ namespace AttendenceManagement.Controllers
         [Route("GetList")]
         public async Task<IActionResult> WorkHourReport()
         {
-            var list = await logProcess.WorkHourReport();
+            var list = await logProcess.ReportsAsync();
+            //var jsonList = await Task.Run(() => JsonConvert.SerializeObject(list));
             return Ok(list);
         }
     }

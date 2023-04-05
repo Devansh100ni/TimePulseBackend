@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace AttendenceManagement.Models;
 
@@ -72,4 +70,16 @@ public partial class AttendanceManagement001Context : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+
+    public override int SaveChanges()
+    {
+        int rowsAffected = base.SaveChanges();
+        return rowsAffected;
+    }
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        int rowsAffected = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        return rowsAffected;
+    }
 }

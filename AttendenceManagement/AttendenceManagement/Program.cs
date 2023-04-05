@@ -17,6 +17,7 @@ builder.Services.AddDbContextPool<AttendanceManagement001Context>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection"));
 });
+
 builder.Services.AddScoped<IDatasheet, Datasheet>();
 builder.Services.AddScoped<ILogProcess, LogProcessRepo>();
 

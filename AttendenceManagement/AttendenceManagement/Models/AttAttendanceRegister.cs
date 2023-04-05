@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AttendenceManagement.Models;
+﻿namespace AttendenceManagement.Models;
 
 public partial class AttAttendanceRegister
 {

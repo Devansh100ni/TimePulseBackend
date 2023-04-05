@@ -4,8 +4,8 @@ namespace AttendenceManagement.Infrastructure.IRepository
 {
     public interface IDatasheet
     {
-        string Documentupload(IFormFile formFile);
-        DataTable EmployeeData(string path);
-        void ImportEmployee(DataTable employee);
+        public Task<string> Documentupload(IFormFile formFile);
+        public Task<DataTable> EmployeeData(string path);
+        public Task<int> ImportEmployee(DataTable employee);
     }
 }

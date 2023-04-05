@@ -1,9 +1,8 @@
 ﻿using AttendenceManagement.Infrastructure.IRepository;
 using AttendenceManagement.Models;
-using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Data.OleDb;
-using System.IO;
 
 namespace AttendenceManagement.Infrastructure.Repository
 {
@@ -22,7 +21,7 @@ namespace AttendenceManagement.Infrastructure.Repository
         }
 
 
-        public DataTable EmployeeData(string path)
+        public async Task<DataTable> EmployeeData(string path)
         {
             try
             {
@@ -36,18 +35,18 @@ namespace AttendenceManagement.Infrastructure.Repository
                     {
                         using (OleDbDataAdapter adptExcel = new OleDbDataAdapter())
                         {
-                            excelconn.Open();
+                            await excelconn.OpenAsync();
                             cmd.Connection = excelconn;
                             DataTable excelSchema;
                             excelSchema = excelconn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
                             var sheetname = excelSchema.Rows[0]["Table_Name"].ToString();
-                            excelconn.Close();
+                            await excelconn.CloseAsync();
 
-                            excelconn.Open();
+                            await excelconn.OpenAsync();
                             cmd.CommandText = "SELECT * From [" + sheetname + "]";
                             adptExcel.SelectCommand = cmd;
                             adptExcel.Fill(dataTable);
-                            excelconn.Close();
+                            await excelconn.CloseAsync();
                         }
                     }
                 }
@@ -59,11 +58,17 @@ namespace AttendenceManagement.Infrastructure.Repository
             }
         }
 
-        public string Documentupload(IFormFile formFile)
+        public async Task<string> Documentupload(IFormFile formFile)
         {
             try
             {
-               
+                string extension = Path.GetExtension(Path.GetFileName(formFile.FileName));
+                string[] allowedExtsnions = new string[] { ".xls", ".xlsx" };
+                if (!allowedExtsnions.Contains(extension))
+                {
+                    throw new Exception("Sorry! This file is not allowed, make sure that file having extension as either.xls or.xlsx is uploaded.");
+                }
+
                 string uploadpath = hostEnvironment.ContentRootPath;
                 string dest_path = Path.Combine(uploadpath, "uploaded_doc");
 
@@ -71,19 +76,11 @@ namespace AttendenceManagement.Infrastructure.Repository
                 {
                     Directory.CreateDirectory(dest_path);
                 }
-                string sourcefile = Path.GetFileName(formFile.FileName);
+                string sourcefile = Path.GetFileName(Guid.NewGuid() + "_/_" + formFile.FileName);
                 string path = Path.Combine(dest_path, sourcefile);
-
-                string extension = Path.GetExtension(sourcefile);
-                string[] allowedExtsnions = new string[] { ".xls", ".xlsx" };
-                if (!allowedExtsnions.Contains(extension))
-                {
-                    throw new Exception("Sorry! This file is not allowed, make sure that file having extension as either.xls or.xlsx is uploaded.");
-                }
-
                 using (FileStream filestream = new FileStream(path, FileMode.Create))
                 {
-                    formFile.CopyTo(filestream);
+                    await formFile.CopyToAsync(filestream);
                 }
                 return path;
             }
@@ -93,11 +90,11 @@ namespace AttendenceManagement.Infrastructure.Repository
             }
         }
 
-        public void ImportEmployee(DataTable employee)
+        public async Task<int> ImportEmployee(DataTable employee)
         {
             try
             {
-
+                var rawsEffected = 0;
                 for (int i = 0; i < employee.Rows.Count; i++)
                 {
                     var userID = employee.Rows[i][0].ToString();
@@ -114,11 +111,11 @@ namespace AttendenceManagement.Infrastructure.Repository
                         log.Createdby = configuration["CreatedBy"];
                         log.Createddate = DateTime.Now.Date;
 
-                        var datetime = db.AttAttendanceLogs.Any(x => x.UserId == log.UserId && x.LogTime == log.LogTime && x.AttDate.Date == log.AttDate.Date);
+                        var datetime = await db.AttAttendanceLogs.AnyAsync(x => x.UserId == log.UserId && x.LogTime == log.LogTime && x.AttDate.Date == log.AttDate.Date);
                         if (!datetime)
                         {
-                            db.AttAttendanceLogs.Add(log);
-                            db.SaveChanges();
+                            await db.AttAttendanceLogs.AddAsync(log);
+                            rawsEffected += await db.SaveChangesAsync();
                         }
                     }
                     else
@@ -126,6 +123,7 @@ namespace AttendenceManagement.Infrastructure.Repository
                         continue;
                     }
                 }
+                return rawsEffected;
             }
             catch
             {

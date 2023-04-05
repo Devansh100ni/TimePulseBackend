@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ax+4uizF8zSCOCUNykNGyrbkR+5nLOGWacP5pxnJcvm8xnxX/9F3MPDz+L0xwK7xx3nOrD02MzNoIgFCopnjiw==",
+  "dgSpecHash": "iiXuEyIoue2tQ4YB+4uicEnFNvbcWy86VFKSna3iOjr5c65ntLkJEQHWcbYyI0m056JyySw31VsjljFg9gF4pQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DELL\\OneDrive\\Desktop\\Time Management\\TimeManagementAPI\\AttendenceManagement\\AttendenceManagement\\AttendenceManagement.csproj",
+  "projectFilePath": "C:\\Users\\DELL\\OneDrive\\Documents\\Tasks OTC\\Time Attenedence\\Time Management\\TimeManagementAPI\\AttendenceManagement\\AttendenceManagement\\AttendenceManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
@@ -44,6 +44,7 @@
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
