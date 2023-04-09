@@ -35,7 +35,7 @@ namespace AttendenceManagement.Infrastructure.Repository
                     userLogOut = logTimes.Last();
 
                     var lateTime = (userLogIn - Convert.ToDateTime("10:00:00 AM").TimeOfDay).TotalMinutes;
-                   
+
                     var workTime = Convert.ToDecimal((userLogOut - userLogIn).TotalMinutes);
                     var hour = workTime / 60;
                     var overtime = Convert.ToDecimal(workTime - 540);

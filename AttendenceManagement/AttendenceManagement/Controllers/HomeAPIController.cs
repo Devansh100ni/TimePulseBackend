@@ -65,7 +65,7 @@ namespace AttendenceManagement.Controllers
 
         [HttpGet]
         [Route("GetList")]
-        public async Task<IActionResult> WorkHourReport()
+        public async Task<IActionResult> Report()
         {
             var list = await logProcess.ReportsAsync();
             //var jsonList = await Task.Run(() => JsonConvert.SerializeObject(list));
